@@ -1,0 +1,16 @@
+{
+  "name": "sinhhocsontra",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "install:backend": "npm --prefix BackEnd install",
+    "install:frontend": "npm --prefix FrontEnd install --legacy-peer-deps",
+    "install:all": "npm run install:backend && npm run install:frontend",
+    "start:backend": "npm --prefix BackEnd run start:dev",
+    "start:frontend": "npm --prefix FrontEnd run dev",
+    "dev": "concurrently \"npm run start:backend\" \"npm run start:frontend\""
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.0"
+  }
+}
