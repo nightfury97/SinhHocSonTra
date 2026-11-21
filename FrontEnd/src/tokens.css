@@ -1,0 +1,99 @@
+/* Hallmark · genre: modern-minimal · macrostructure: App Shell (operational console, not a catalog landing macro)
+ * theme: custom (vibe: "field station ledger, forest-green signal, plain and dense")
+ * paper oklch(99% 0.003 160) · accent oklch(48% 0.12 155) chromatic-green · display+body Be Vietnam Pro · data IBM Plex Mono
+ * axes: paper-band=light · display-style=grotesk-sans · accent-hue=chromatic-other (green)
+ * enrichment: none · nav: N3 side-rail · footer: none (app shell)
+ * data palette: dataviz reference slots blue/aqua/yellow/magenta/green (validated all-pairs: NV ΔE 15.6, CVD ΔE 6.1 → secondary encoding required)
+ */
+:root {
+  /* surfaces */
+  --color-paper: oklch(99% 0.003 160);
+  --color-panel: oklch(100% 0 0);
+  --color-sunken: oklch(97.4% 0.005 160);
+  --color-hover: oklch(96.2% 0.008 160);
+  /* side rail: light, tinted toward the accent hue */
+  --color-rail: oklch(97.2% 0.014 155);
+  --color-rail-2: oklch(93.2% 0.03 155);
+  --color-rail-ink: oklch(24% 0.03 165);
+  --color-rail-ink-2: oklch(44% 0.025 165);
+
+  /* ink */
+  --color-ink: oklch(21% 0.015 165);
+  --color-ink-2: oklch(42% 0.012 165);
+  --color-ink-3: oklch(53% 0.01 165);
+  --color-ink-on-accent: oklch(98.5% 0.006 155);
+
+  /* rules */
+  --color-rule: oklch(91.5% 0.008 160);
+  --color-rule-strong: oklch(82% 0.01 160);
+
+  /* accent + focus */
+  --color-accent: oklch(50% 0.125 155);
+  --color-accent-hover: oklch(44% 0.12 155);
+  --color-accent-soft: oklch(95.5% 0.035 155);
+  --color-focus: oklch(55% 0.15 245);
+
+  /* feedback (icon + label always accompany) */
+  --color-danger: oklch(50% 0.17 27);
+  --color-danger-soft: oklch(95% 0.025 27);
+  --color-warn: oklch(52% 0.11 70);
+  --color-warn-soft: oklch(95.5% 0.04 85);
+  --color-ok: oklch(48% 0.12 155);
+  --color-ok-soft: oklch(95% 0.03 155);
+
+  /* IUCN categories — badge background tints; label text always in ink */
+  --iucn-cr: oklch(90% 0.05 27);
+  --iucn-en: oklch(91% 0.055 50);
+  --iucn-vu: oklch(93% 0.06 90);
+  --iucn-nt: oklch(93% 0.045 125);
+  --iucn-lc: oklch(93% 0.035 155);
+  --iucn-dd: oklch(92% 0.004 160);
+  --iucn-ne: oklch(96% 0.003 160);
+  --iucn-heritage: oklch(92% 0.035 250);
+
+  /* data series (dataviz reference slots, converted to OKLCH) */
+  --series-bird: oklch(57.5% 0.163 256);
+  --series-amphibian: oklch(66.9% 0.141 162);
+  --series-mammal: oklch(76.4% 0.161 75);
+  --series-reptile: oklch(71.6% 0.141 357);
+  --series-plant: oklch(52.9% 0.18 142);
+  --series-a: oklch(57.5% 0.163 256);
+  --series-b: oklch(67.1% 0.175 41);
+  --series-neutral: oklch(62% 0.02 160);
+
+  /* type */
+  --font-ui: 'Be Vietnam Pro', system-ui, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
+  --text-xs: 0.75rem;
+  --text-sm: 0.8125rem;
+  --text-base: 0.875rem;
+  --text-md: 1rem;
+  --text-lg: 1.25rem;
+  --text-xl: 1.625rem;
+  --text-stat: clamp(1.625rem, 1.2rem + 1.2vw, 2.25rem);
+
+  /* space (4pt) */
+  --space-3xs: 2px;
+  --space-2xs: 4px;
+  --space-xs: 8px;
+  --space-sm: 12px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-2xl: 48px;
+
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-pill: 999px;
+  --shadow-pop: 0 8px 28px oklch(21% 0.015 165 / 0.14), 0 1px 3px oklch(21% 0.015 165 / 0.08);
+
+  /* motion */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in: cubic-bezier(0.7, 0, 0.84, 0);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-micro: 120ms;
+  --dur-short: 220ms;
+  --dur-long: 360ms;
+
+  --rail-w: 232px;
+}

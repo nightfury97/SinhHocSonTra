@@ -1,0 +1,279 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN
+  RANGER
+  VIEWER
+}
+
+enum TaxonGroup {
+  MAMMAL
+  BIRD
+  REPTILE
+  AMPHIBIAN
+  PLANT
+}
+
+enum ConservationStatus {
+  LC
+  NT
+  VU
+  EN
+  CR
+  EW
+  EX
+  DD
+  NE
+  HERITAGE
+}
+
+enum BasisOfRecord {
+  HUMAN_OBSERVATION
+  PRESERVED_SPECIMEN
+  MACHINE_OBSERVATION
+  OTHER
+}
+
+enum ForestHabitat {
+  PLANTATION
+  RICH
+  POOR
+}
+
+enum ObservationStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+enum StationType {
+  WATER
+  AIR
+  SOIL
+}
+
+enum StationLevel {
+  GOOD
+  GOOD_2
+  FAIR
+  POOR
+}
+
+model User {
+  id            String         @id @default(cuid())
+  email         String         @unique
+  passwordHash  String
+  name          String
+  role          Role           @default(VIEWER)
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  observations  Observation[]  @relation("ObserverObservations")
+  reviewed      Observation[]  @relation("ReviewerObservations")
+  datasets      Dataset[]
+  speciesImages SpeciesImage[]
+}
+
+model Species {
+  id                String             @id @default(cuid())
+  slug              String             @unique
+  tag               String
+  name              String
+  scientificName    String             @unique
+  authorship        String?
+  taxonClass        String?
+  taxonOrder        String?
+  family            String?
+  genus             String?
+  group             TaxonGroup
+  status            ConservationStatus @default(NE)
+  statusLabel       String?
+  populationLabel   String?
+  description       String?            @db.Text
+  habitat           String?            @db.Text
+  threats           Json               @default("[]")
+  featured          Boolean            @default(false)
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @updatedAt
+  observations      Observation[]
+  populationRecords PopulationRecord[]
+  mapPins           MapPin[]
+  transectSurveys   TransectSurvey[]
+  images            SpeciesImage[]
+}
+
+/// Ảnh minh hoạ loài. File lưu trên đĩa (UPLOAD_DIR/species/<fileKey>.webp và <fileKey>-thumb.webp),
+/// đã chuẩn hoá về WebP và xoá EXIF (tránh lộ toạ độ GPS nơi chụp loài nhạy cảm).
+model SpeciesImage {
+  id           String   @id @default(cuid())
+  speciesId    String
+  species      Species  @relation(fields: [speciesId], references: [id], onDelete: Cascade)
+  fileKey      String   @unique
+  sourceHash   String?
+  width        Int
+  height       Int
+  caption      String?  @db.Text
+  credit       String?
+  license      String?
+  isPrimary    Boolean  @default(false)
+  sortOrder    Int      @default(0)
+  uploadedById String?
+  uploadedBy   User?    @relation(fields: [uploadedById], references: [id], onDelete: SetNull)
+  createdAt    DateTime @default(now())
+
+  @@unique([speciesId, sourceHash])
+  @@index([speciesId, sortOrder])
+}
+
+model PopulationRecord {
+  id        String   @id @default(cuid())
+  speciesId String
+  species   Species  @relation(fields: [speciesId], references: [id], onDelete: Cascade)
+  year      Int
+  value     Int
+  createdAt DateTime @default(now())
+
+  @@unique([speciesId, year])
+}
+
+model Zone {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  description String?  @db.Text
+  mapPins     MapPin[]
+}
+
+model MonitoringStation {
+  id        String       @id @default(cuid())
+  name      String
+  type      StationType
+  rating    String
+  score     Int
+  metric    String
+  level     StationLevel
+  lat       Float?
+  lng       Float?
+  updatedAt DateTime     @updatedAt
+  createdAt DateTime     @default(now())
+  mapPin    MapPin?
+}
+
+model Observation {
+  id            String            @id @default(cuid())
+  speciesId     String
+  species       Species           @relation(fields: [speciesId], references: [id])
+  observerId    String?
+  observer      User?             @relation("ObserverObservations", fields: [observerId], references: [id])
+  // Dữ liệu nhập từ bộ dữ liệu ngoài (Darwin Core...) — không gắn với tài khoản người dùng.
+  externalId    String?           @unique
+  datasetId     String?
+  dataset       Dataset?          @relation(fields: [datasetId], references: [id], onDelete: Cascade)
+  basisOfRecord BasisOfRecord     @default(HUMAN_OBSERVATION)
+  identifiedBy  String?
+  preparations  String?
+  place         String
+  note          String?           @db.Text
+  count         Int?
+  lat           Float?
+  lng           Float?
+  status        ObservationStatus @default(PENDING)
+  observedAt    DateTime          @default(now())
+  reviewedById  String?
+  reviewedBy    User?             @relation("ReviewerObservations", fields: [reviewedById], references: [id])
+  reviewedAt    DateTime?
+  createdAt     DateTime          @default(now())
+  mapPin        MapPin?
+
+  @@index([speciesId, observedAt])
+  @@index([datasetId])
+}
+
+/// Một bộ dữ liệu đã nhập (file CSV/Excel) — dùng để truy nguồn và xoá/nhập lại cả lô.
+model Dataset {
+  id           String           @id @default(cuid())
+  code         String           @unique
+  name         String
+  kind         String
+  sourceFile   String?
+  publisher    String?
+  description  String?          @db.Text
+  importedById String?
+  importedBy   User?            @relation(fields: [importedById], references: [id], onDelete: SetNull)
+  importedAt   DateTime         @default(now())
+  observations Observation[]
+  surveys      TransectSurvey[]
+}
+
+/// Tuyến khảo sát cố định (line transect).
+model Transect {
+  id       String           @id @default(cuid())
+  code     String           @unique
+  lengthKm Float
+  name     String?
+  surveys  TransectSurvey[]
+}
+
+/// Một đợt đi tuyến trong một năm (lặp lại `repeatDays` ngày liên tiếp).
+model TransectSurvey {
+  id         String             @id @default(cuid())
+  transectId String
+  transect   Transect           @relation(fields: [transectId], references: [id], onDelete: Cascade)
+  year       Int
+  repeatDays Int                @default(3)
+  speciesId  String?
+  species    Species?           @relation(fields: [speciesId], references: [id], onDelete: SetNull)
+  datasetId  String?
+  dataset    Dataset?           @relation(fields: [datasetId], references: [id], onDelete: Cascade)
+  note       String?            @db.Text
+  sightings  TransectSighting[]
+
+  @@unique([transectId, year])
+}
+
+/// Một đàn/nhóm cá thể ghi nhận trên tuyến.
+model TransectSighting {
+  id                     String         @id @default(cuid())
+  surveyId               String
+  survey                 TransectSurvey @relation(fields: [surveyId], references: [id], onDelete: Cascade)
+  groupCode              String
+  individuals            Int
+  utmX                   Float?
+  utmY                   Float?
+  lat                    Float?
+  lng                    Float?
+  altitudeM              Float?
+  distanceM              Float?
+  bearingDeg             Float?
+  habitat                ForestHabitat?
+  offsetAngleDeg         Float?
+  perpendicularDistanceM Float?
+  flagged                Boolean        @default(false)
+  flagNote               String?        @db.Text
+
+  @@unique([surveyId, groupCode])
+}
+
+model MapPin {
+  id            String             @id @default(cuid())
+  name          String
+  lat           Float
+  lng           Float
+  color         String?
+  countLabel    String?
+  lastSeenAt    DateTime?
+  zoneId        String?
+  zone          Zone?              @relation(fields: [zoneId], references: [id])
+  speciesId     String?
+  species       Species?           @relation(fields: [speciesId], references: [id])
+  stationId     String?            @unique
+  station       MonitoringStation? @relation(fields: [stationId], references: [id])
+  observationId String?            @unique
+  observation   Observation?       @relation(fields: [observationId], references: [id])
+  createdAt     DateTime           @default(now())
+}

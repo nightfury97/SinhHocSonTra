@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; }
+  @keyframes strapulse { 0%,100% { transform: scale(1); opacity: .55; } 50% { transform: scale(1.9); opacity: 0; } }
+  @media (max-width: 860px) {
+    aside[data-nav] { position: absolute; z-index: 40; height: 100%; transition: transform .25s ease; }
+    aside[data-nav][data-open="false"] { transform: translateX(-100%); }
+    div[data-scrim][data-open="true"] { display: block !important; }
+    button[data-burger] { display: inline-flex !important; }
+  }
+</style>
+</helmet>
+<div style="display:flex; height:100vh; width:100%; overflow:hidden; position:relative; font-family:'IBM Plex Sans',sans-serif; background:#f4f2e9; color:#1b2a20; -webkit-font-smoothing:antialiased;">
+
+  <aside data-nav="true" data-open="{{ navOpen }}" style="width:250px; flex:none; background:#22392b; color:#e9efe2; display:flex; flex-direction:column; padding:22px 16px;">
+    <div style="display:flex; align-items:center; gap:11px; padding:4px 8px 22px;">
+      <span style="width:34px; height:34px; border-radius:11px; background:#b4623a; display:flex; align-items:center; justify-content:center; flex:none;">
+        <span style="width:13px; height:13px; border-radius:50%; background:#f4f2e9; box-shadow:0 0 0 3px #22392b, 0 0 0 5px #b4623a;"></span>
+      </span>
+      <span style="line-height:1.15;">
+        <span style="display:block; font-family:'Spectral',serif; font-weight:600; font-size:17px; letter-spacing:.2px;">Sơn Trà</span>
+        <span style="display:block; font-size:11px; color:#9db497; font-family:'IBM Plex Mono',monospace; letter-spacing:.5px;">ĐA DẠNG SINH HỌC</span>
+      </span>
+    </div>
+
+    <div style="font-size:10.5px; letter-spacing:1.4px; color:#7f9a7a; font-family:'IBM Plex Mono',monospace; padding:0 10px 8px;">HỆ THỐNG</div>
+
+    <button onClick="{{ goDash }}" style="display:flex; align-items:center; gap:12px; width:100%; text-align:left; border:none; cursor:pointer; padding:11px 12px; border-radius:10px; font:inherit; font-size:14px; color:#e9efe2; background:{{ dashBg }}; margin-bottom:3px;">
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="2" width="6" height="6" rx="1.4"/><rect x="10" y="2" width="6" height="6" rx="1.4"/><rect x="2" y="10" width="6" height="6" rx="1.4"/><rect x="10" y="10" width="6" height="6" rx="1.4"/></svg>
+      Tổng quan
+    </button>
+    <button onClick="{{ goMap }}" style="display:flex; align-items:center; gap:12px; width:100%; text-align:left; border:none; cursor:pointer; padding:11px 12px; border-radius:10px; font:inherit; font-size:14px; color:#e9efe2; background:{{ mapBg }}; margin-bottom:3px;">
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 2c2.5 0 4.5 2 4.5 4.5C13.5 10 9 16 9 16S4.5 10 4.5 6.5C4.5 4 6.5 2 9 2z"/><circle cx="9" cy="6.5" r="1.7"/></svg>
+      Bản đồ phân bố
+    </button>
+    <button onClick="{{ goSpecies }}" style="display:flex; align-items:center; gap:12px; width:100%; text-align:left; border:none; cursor:pointer; padding:11px 12px; border-radius:10px; font:inherit; font-size:14px; color:#e9efe2; background:{{ speciesBg }}; margin-bottom:3px;">
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="9" cy="9" r="7"/><path d="M9 5.5v7M5.5 9h7"/></svg>
+      Danh mục loài
+    </button>
+    <button onClick="{{ goEntry }}" style="display:flex; align-items:center; gap:12px; width:100%; text-align:left; border:none; cursor:pointer; padding:11px 12px; border-radius:10px; font:inherit; font-size:14px; color:#e9efe2; background:{{ entryBg }}; margin-bottom:3px;">
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="2.5" width="12" height="13" rx="2"/><path d="M6 6.5h6M6 9.5h6M6 12.5h3.5"/></svg>
+      Nhập liệu quan sát
+    </button>
+
+    <div style="margin-top:auto; background:#2c473650; border:1px solid #3c5a48; border-radius:12px; padding:13px 14px;">
+      <div style="font-size:11px; color:#9db497; margin-bottom:9px; font-family:'IBM Plex Mono',monospace;">TÌNH TRẠNG HỆ THỐNG</div>
+      <div style="display:flex; align-items:center; gap:8px; font-size:12.5px; color:#cbd8c3;"><span style="width:7px; height:7px; border-radius:50%; background:#7fb069;"></span> 5 trạm quan trắc trực tuyến</div>
+      <div style="display:flex; align-items:center; gap:8px; font-size:12.5px; color:#cbd8c3; margin-top:6px;"><span style="width:7px; height:7px; border-radius:50%; background:#e0a94b;"></span> 3 báo cáo chờ duyệt</div>
+    </div>
+    <div style="display:flex; align-items:center; gap:10px; padding:14px 8px 0;">
+      <span style="width:30px; height:30px; border-radius:50%; background:#3c5a48; display:flex; align-items:center; justify-content:center; font-size:12px; color:#cbd8c3; font-weight:600;">NA</span>
+      <span style="line-height:1.2;"><span style="display:block; font-size:13px; color:#e9efe2;">Nguyễn Văn An</span><span style="display:block; font-size:11px; color:#7f9a7a;">Kiểm lâm · Hạt Sơn Trà</span></span>
+    </div>
+  </aside>
+
+  <div data-scrim="true" data-open="{{ navOpen }}" onClick="{{ closeNav }}" style="display:none; position:absolute; inset:0; background:#1b2a2055; z-index:30;"></div>
+
+  <main style="flex:1; min-width:0; display:flex; flex-direction:column; overflow:hidden;">
+    <header style="flex:none; height:64px; border-bottom:1px solid #e0e4d4; background:#faf9f3; display:flex; align-items:center; gap:14px; padding:0 24px;">
+      <button data-burger="true" onClick="{{ toggleNav }}" style="display:none; align-items:center; justify-content:center; width:38px; height:38px; border:1px solid #d7dcca; background:#fff; border-radius:9px; cursor:pointer; flex:none;">
+        <svg width="18" height="18" viewBox="0 0 18 18" stroke="#2f5540" stroke-width="1.7"><path d="M3 5h12M3 9h12M3 13h12"/></svg>
+      </button>
+      <div style="min-width:0;">
+        <div style="font-family:'Spectral',serif; font-size:19px; font-weight:600; line-height:1.1;">{{ pageTitle }}</div>
+        <div style="font-size:12px; color:#77836f; margin-top:1px;">{{ pageSub }}</div>
+      </div>
+      <div style="margin-left:auto; display:flex; align-items:center; gap:10px;">
+        <div style="display:flex; align-items:center; gap:8px; background:#fff; border:1px solid #dde2d1; border-radius:9px; padding:8px 12px; min-width:0;">
+          <svg width="15" height="15" viewBox="0 0 15 15" fill="none" stroke="#8a9581" stroke-width="1.5"><circle cx="6.5" cy="6.5" r="4.5"/><path d="M10 10l3 3"/></svg>
+          <input placeholder="Tìm loài, khu vực, báo cáo…" style="border:none; outline:none; font:inherit; font-size:13px; background:transparent; width:190px; color:#1b2a20;"/>
+        </div>
+        <button style="width:38px; height:38px; border:1px solid #dde2d1; background:#fff; border-radius:9px; cursor:pointer; display:flex; align-items:center; justify-content:center; position:relative;">
+          <svg width="17" height="17" viewBox="0 0 18 18" fill="none" stroke="#2f5540" stroke-width="1.6"><path d="M9 2a4.5 4.5 0 0 0-4.5 4.5c0 3.5-1.5 5-1.5 5h12s-1.5-1.5-1.5-5A4.5 4.5 0 0 0 9 2z"/><path d="M7.5 15a1.5 1.5 0 0 0 3 0"/></svg>
+          <span style="position:absolute; top:7px; right:8px; width:7px; height:7px; border-radius:50%; background:#b4623a; border:1.5px solid #fff;"></span>
+        </button>
+      </div>
+    </header>
+
+    <div style="flex:1; overflow-y:auto; overflow-x:hidden;">
+
+      <!-- ============ TỔNG QUAN ============ -->
+      <section data-screen-label="Tổng quan" style="display:{{ dashDisplay }}; padding:26px 28px 40px; max-width:1240px;">
+        <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:16px;">
+          <sc-for list="{{ stats }}" as="s" hint-placeholder-count="4">
+            <div style="background:#fffefb; border:1px solid #e4e8d8; border-radius:15px; padding:18px 19px; box-shadow:0 1px 2px rgba(28,43,33,.04);">
+              <div style="display:flex; align-items:center; justify-content:space-between;">
+                <span style="font-size:12.5px; color:#77836f;">{{ s.label }}</span>
+                <span style="width:9px; height:9px; border-radius:3px; background:{{ s.dot }};"></span>
+              </div>
+              <div style="font-family:'Spectral',serif; font-size:32px; font-weight:600; margin:9px 0 2px; letter-spacing:-.5px;">{{ s.value }}</div>
+              <div style="font-size:12px; color:{{ s.trendColor }}; font-family:'IBM Plex Mono',monospace;">{{ s.trend }}</div>
+            </div>
+          </sc-for>
+        </div>
+
+        <div style="display:grid; grid-template-columns:1.55fr 1fr; gap:16px; margin-top:16px;">
+          <div style="background:#fffefb; border:1px solid #e4e8d8; border-radius:15px; padding:20px 22px; box-shadow:0 1px 2px rgba(28,43,33,.04);">
+            <div style="display:flex; align-items:baseline; justify-content:space-between; flex-wrap:wrap; gap:6px;">
+              <div>
+                <div style="font-family:'Spectral',serif; font-size:17px; font-weight:600;">Quần thể Voọc chà vá chân nâu</div>
+                <div style="font-size:12px; color:#77836f;">Ước tính số cá thể ghi nhận theo năm</div>
+              </div>
+              <div style="font-family:'IBM Plex Mono',monospace; font-size:12px; color:#557d4a;">↗ +28,6% từ 2019</div>
+            </div>
+            <div style="display:flex; align-items:flex-end; gap:14px; height:186px; margin-top:22px; padding-bottom:26px; border-bottom:1px solid #ebeee1; position:relative;">
+              <sc-for list="{{ popBars }}" as="b" hint-placeholder-count="6">
+                <div style="flex:1; display:flex; flex-direction:column; align-items:center; justify-content:flex-end; height:100%; position:relative;">
+                  <span style="font-family:'IBM Plex Mono',monospace; font-size:11px; color:#4a5a44; margin-bottom:6px;">{{ b.val }}</span>
+                  <div style="width:100%; max-width:46px; height:{{ b.h }}; border-radius:7px 7px 3px 3px; background:{{ b.fill }};"></div>
+                  <span style="position:absolute; bottom:-24px; font-size:11.5px; color:#77836f; font-family:'IBM Plex Mono',monospace;">{{ b.year }}</span>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+
+          <div style="background:#fffefb; border:1px solid #e4e8d8; border-radius:15px; padding:20px 22px; box-shadow:0 1px 2px rgba(28,43,33,.04);">
+            <div style="font-family:'Spectral',serif; font-size:17px; font-weight:600;">Quan trắc môi trường</div>
+            <div style="font-size:12px; color:#77836f; margin-bottom:18px;">Chỉ số trung bình 24 giờ qua</div>
+            <sc-for list="{{ envStations }}" as="e" hint-placeholder-count="3">
+              <div style="margin-bottom:17px;">
+                <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:7px;">
+                  <span style="font-size:13px;">{{ e.name }}</span>
+                  <span style="font-family:'IBM Plex Mono',monospace; font-size:12px; color:{{ e.color }};">{{ e.rating }}</span>
+                </div>
+                <div style="height:8px; border-radius:5px; background:#edefe3; overflow:hidden;">
+                  <div style="height:100%; width:{{ e.w }}; border-radius:5px; background:{{ e.color }};"></div>
+                </div>
+                <div style="font-size:11px; color:#8a9581; margin-top:5px; font-family:'IBM Plex Mono',monospace;">{{ e.metric }}</div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:16px;">
+          <div style="background:#fffefb; border:1px solid #e4e8d8; border-radius:15px; padding:20px 22px; box-shadow:0 1px 2px rgba(28,43,33,.04);">
+            <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:14px;">
+              <div style="font-family:'Spectral',serif; font-size:17px; font-weight:600;">Quan sát gần đây</div>
+              <button onClick="{{ goEntry }}" style="border:none; background:transparent; color:#557d4a; font:inherit; font-size:12.5px; cursor:pointer; font-weight:500;">Xem tất cả →</button>
+            </div>
+            <sc-for list="{{ observations }}" as="o" hint-placeholder-count="4">
+              <div style="display:flex; align-items:center; gap:13px; padding:11px 0; border-top:1px solid #eef0e6;">
+                <span style="width:38px; height:38px; border-radius:10px; flex:none; background:{{ o.bg }}; display:flex; align-items:center; justify-content:center; font-family:'IBM Plex Mono',monospace; font-size:12px; font-weight:600; color:{{ o.fg }};">{{ o.tag }}</span>
+                <div style="min-width:0; flex:1;">
+                  <div style="font-size:13.5px; font-weight:500;">{{ o.name }}</div>
+                  <div style="font-size:12px; color:#77836f;">{{ o.place }} · {{ o.by }}</div>
+                </div>
+                <span style="font-size:11.5px; color:#8a9581; font-family:'IBM Plex Mono',monospace; white-space:nowrap;">{{ o.time }}</span>
+              </div>
+            </sc-for>
+          </div>
+
+          <div style="background:#2b4433; border:1px solid #2b4433; border-radius:15px; padding:22px; color:#e9efe2; position:relative; overflow:hidden;">
+            <div style="font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:1px; color:#9db497;">LOÀI ƯU TIÊN BẢO TỒN</div>
+            <div style="font-family:'Spectral',serif; font-size:24px; font-weight:600; margin:8px 0 4px;">Voọc chà vá chân nâu</div>
+            <div style="font-style:italic; font-family:'Spectral',serif; color:#b7c8ae; font-size:14px;">Pygathrix nemaeus</div>
+            <p style="font-size:13px; line-height:1.6; color:#cbd8c3; margin:14px 0 18px; max-width:340px;">Loài linh trưởng đặc hữu Đông Dương, được mệnh danh “nữ hoàng linh trưởng”. Sơn Trà là một trong những quần thể lớn nhất Việt Nam.</p>
+            <div style="display:flex; gap:22px;">
+              <div><div style="font-family:'Spectral',serif; font-size:26px; font-weight:600;">~1.350</div><div style="font-size:11.5px; color:#9db497;">cá thể ước tính</div></div>
+              <div><div style="font-family:'Spectral',serif; font-size:26px; font-weight:600; color:#e0a94b;">EN</div><div style="font-size:11.5px; color:#9db497;">Nguy cấp · IUCN</div></div>
+            </div>
+            <button onClick="{{ goVooc }}" style="margin-top:20px; border:1px solid #4f6f5c; background:#3c5a4855; color:#e9efe2; font:inherit; font-size:13px; padding:9px 16px; border-radius:9px; cursor:pointer;">Xem hồ sơ loài →</button>
+            <span style="position:absolute; right:-40px; bottom:-40px; width:160px; height:160px; border-radius:50%; border:1px solid #ffffff14;"></span>
+            <span style="position:absolute; right:-10px; bottom:-10px; width:90px; height:90px; border-radius:50%; border:1px solid #ffffff14;"></span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ BẢN ĐỒ ============ -->
+      <section data-screen-label="Bản đồ" style="display:{{ mapDisplay }}; height:100%;">
+        <div style="display:flex; height:100%; min-height:520px;">
+          <div style="width:270px; flex:none; border-right:1px solid #e0e4d4; background:#faf9f3; padding:20px 18px; overflow-y:auto;">
+            <div style="font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:1px; color:#8a9581; margin-bottom:12px;">NHÓM LOÀI</div>
+            <sc-for list="{{ mapFilters }}" as="f" hint-placeholder-count="4">
+              <label style="display:flex; align-items:center; gap:10px; padding:8px 0; font-size:13.5px; cursor:pointer;">
+                <span style="width:16px; height:16px; border-radius:5px; border:1.5px solid {{ f.color }}; background:{{ f.color }}; display:flex; align-items:center; justify-content:center;"><svg width="10" height="10" viewBox="0 0 10 10" stroke="#fff" stroke-width="1.8" fill="none"><path d="M2 5.2l2 2 4-4.4"/></svg></span>
+                <span style="flex:1;">{{ f.label }}</span>
+                <span style="font-family:'IBM Plex Mono',monospace; font-size:11px; color:#8a9581;">{{ f.count }}</span>
+              </label>
+            </sc-for>
+            <div style="height:1px; background:#e6e9db; margin:16px 0;"></div>
+            <div style="font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:1px; color:#8a9581; margin-bottom:12px;">LỚP DỮ LIỆU</div>
+            <label style="display:flex; align-items:center; gap:10px; padding:8px 0; font-size:13.5px; cursor:pointer;"><span style="width:16px; height:16px; border-radius:5px; border:1.5px solid #3d7d78; background:#3d7d78; display:flex; align-items:center; justify-content:center;"><svg width="10" height="10" viewBox="0 0 10 10" stroke="#fff" stroke-width="1.8" fill="none"><path d="M2 5.2l2 2 4-4.4"/></svg></span> Trạm quan trắc</label>
+            <label style="display:flex; align-items:center; gap:10px; padding:8px 0; font-size:13.5px; cursor:pointer;"><span style="width:16px; height:16px; border-radius:5px; border:1.5px solid #c9cebb;"></span> Phân khu chức năng</label>
+            <label style="display:flex; align-items:center; gap:10px; padding:8px 0; font-size:13.5px; cursor:pointer;"><span style="width:16px; height:16px; border-radius:5px; border:1.5px solid #c9cebb;"></span> Đường mòn tuần tra</label>
+          </div>
+
+          <div style="flex:1; min-width:0; position:relative; background:linear-gradient(135deg,#dfe7d6,#eef1e6); overflow:hidden;">
+            <div style="position:absolute; inset:0; background-image:repeating-linear-gradient(115deg, #ffffff00 0 26px, #c9d6bd44 26px 27px), repeating-linear-gradient(45deg, #ffffff00 0 40px, #b9c9ac33 40px 41px);"></div>
+            <div style="position:absolute; left:50%; top:46%; width:62%; height:60%; transform:translate(-50%,-50%); background:radial-gradient(ellipse at 45% 40%, #9fbf8e 0%, #b6cda6 45%, #cfe0c0 100%); border-radius:52% 46% 55% 44% / 48% 55% 45% 52%; box-shadow:inset 0 0 60px #7ea06e55;"></div>
+            <span style="position:absolute; left:22px; bottom:18px; font-family:'IBM Plex Mono',monospace; font-size:11px; color:#5e7256; background:#ffffffcc; padding:5px 9px; border-radius:6px;">◇ nền bản đồ — thả ảnh vệ tinh / GIS Sơn Trà vào đây</span>
+
+            <sc-for list="{{ mapPins }}" as="p" hint-placeholder-count="6">
+              <button onClick="{{ p.onClick }}" title="{{ p.name }}" style="position:absolute; left:{{ p.x }}; top:{{ p.y }}; transform:translate(-50%,-50%); border:none; background:transparent; cursor:pointer; padding:0;">
+                <span style="position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width:16px; height:16px; border-radius:50%; background:{{ p.color }};"></span>
+                <span style="position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width:16px; height:16px; border-radius:50%; background:{{ p.color }}; animation:strapulse 2.4s ease-out infinite;"></span>
+                <span style="display:block; width:15px; height:15px; border-radius:50%; background:{{ p.color }}; border:2.5px solid #fff; box-shadow:0 2px 5px rgba(27,42,32,.35); position:relative;"></span>
+              </button>
+            </sc-for>
+
+            <div style="position:absolute; right:16px; top:16px; background:#fffefbee; border:1px solid #e0e4d4; border-radius:12px; padding:14px 16px; width:216px; box-shadow:0 4px 14px rgba(27,42,32,.1);">
+              <div style="font-family:'IBM Plex Mono',monospace; font-size:10.5px; letter-spacing:1px; color:#8a9581;">ĐIỂM GHI NHẬN</div>
+              <div style="font-family:'Spectral',serif; font-size:15px; font-weight:600; margin:4px 0 3px;">{{ mapSel.name }}</div>
+              <div style="font-size:12px; color:#77836f; margin-bottom:9px;">{{ mapSel.zone }}</div>
+              <div style="display:flex; justify-content:space-between; font-size:12.5px; padding:5px 0; border-top:1px solid #eef0e6;"><span style="color:#77836f;">Cá thể</span><span style="font-family:'IBM Plex Mono',monospace;">{{ mapSel.count }}</span></div>
+              <div style="display:flex; justify-content:space-between; font-size:12.5px; padding:5px 0; border-top:1px solid #eef0e6;"><span style="color:#77836f;">Lần cuối</span><span style="font-family:'IBM Plex Mono',monospace;">{{ mapSel.last }}</span></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ DANH MỤC LOÀI ============ -->
+      <section data-screen-label="Danh mục loài" style="display:{{ speciesDisplay }};">
+        <div style="display:flex; min-height:520px;">
+          <div style="flex:1; min-width:0; padding:22px 24px; border-right:1px solid #e0e4d4;">
+            <div style="display:flex; gap:8px; margin-bottom:16px; flex-wrap:wrap;">
+              <sc-for list="{{ groupChips }}" as="g" hint-placeholder-count="4">
+                <button onClick="{{ g.onClick }}" style="border:1px solid {{ g.border }}; background:{{ g.bg }}; color:{{ g.fg }}; font:inherit; font-size:12.5px; padding:7px 14px; border-radius:20px; cursor:pointer;">{{ g.label }}</button>
+              </sc-for>
+            </div>
+            <sc-for list="{{ speciesList }}" as="sp" hint-placeholder-count="8">
+              <button onClick="{{ sp.onClick }}" style="display:flex; align-items:center; gap:14px; width:100%; text-align:left; border:none; border-bottom:1px solid #eef0e6; background:{{ sp.rowBg }}; cursor:pointer; padding:13px 12px; border-radius:9px; font:inherit;">
+                <span style="width:46px; height:46px; border-radius:11px; flex:none; background:{{ sp.thumbBg }}; border:1px solid #e4e8d8; display:flex; align-items:center; justify-content:center; font-family:'IBM Plex Mono',monospace; font-size:11px; color:{{ sp.thumbFg }}; font-weight:600;">{{ sp.tag }}</span>
+                <span style="flex:1; min-width:0;">
+                  <span style="display:block; font-size:14px; font-weight:500;">{{ sp.name }}</span>
+                  <span style="display:block; font-size:12.5px; color:#77836f; font-style:italic; font-family:'Spectral',serif;">{{ sp.sci }}</span>
+                </span>
+                <span style="font-family:'IBM Plex Mono',monospace; font-size:11px; color:#77836f; white-space:nowrap;">{{ sp.group }}</span>
+                <span style="font-size:11px; font-weight:600; padding:4px 9px; border-radius:20px; background:{{ sp.statusBg }}; color:{{ sp.statusFg }}; white-space:nowrap;">{{ sp.statusShort }}</span>
+              </button>
+            </sc-for>
+          </div>
+
+          <div style="width:340px; flex:none; padding:22px 24px; background:#faf9f3;">
+            <div style="height:150px; border-radius:14px; background:{{ sel.thumbBg }}; border:1px solid #e4e8d8; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px; margin-bottom:16px;">
+              <span style="font-family:'IBM Plex Mono',monospace; font-size:11px; color:{{ sel.thumbFg }};">◇ ảnh loài — {{ sel.tag }}</span>
+              <span style="font-family:'IBM Plex Mono',monospace; font-size:10.5px; color:#a6b09c;">thả ảnh thực địa vào đây</span>
+            </div>
+            <span style="display:inline-block; font-size:11px; font-weight:600; padding:4px 10px; border-radius:20px; background:{{ sel.statusBg }}; color:{{ sel.statusFg }}; margin-bottom:9px;">{{ sel.status }}</span>
+            <div style="font-family:'Spectral',serif; font-size:22px; font-weight:600; line-height:1.15;">{{ sel.name }}</div>
+            <div style="font-style:italic; font-family:'Spectral',serif; color:#77836f; font-size:14px; margin-bottom:14px;">{{ sel.sci }}</div>
+            <p style="font-size:13px; line-height:1.65; color:#3a463370; color:#485541; margin:0 0 16px;">{{ sel.desc }}</p>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:16px;">
+              <div style="background:#fffefb; border:1px solid #e4e8d8; border-radius:11px; padding:12px 13px;"><div style="font-size:11px; color:#8a9581; font-family:'IBM Plex Mono',monospace;">LỚP</div><div style="font-size:14px; font-weight:500; margin-top:3px;">{{ sel.group }}</div></div>
+              <div style="background:#fffefb; border:1px solid #e4e8d8; border-radius:11px; padding:12px 13px;"><div style="font-size:11px; color:#8a9581; font-family:'IBM Plex Mono',monospace;">GHI NHẬN</div><div style="font-size:14px; font-weight:500; margin-top:3px;">{{ sel.count }}</div></div>
+            </div>
+            <div style="font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:1px; color:#8a9581; margin-bottom:9px;">SINH CẢNH</div>
+            <div style="font-size:13px; color:#485541; margin-bottom:16px;">{{ sel.habitat }}</div>
+            <div style="font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:1px; color:#8a9581; margin-bottom:9px;">MỐI ĐE DỌA</div>
+            <div style="display:flex; flex-wrap:wrap; gap:7px;">
+              <sc-for list="{{ sel.threats }}" as="t" hint-placeholder-count="3">
+                <span style="font-size:12px; padding:5px 11px; border-radius:8px; background:#f3ded3; color:#95492a;">{{ t }}</span>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ NHẬP LIỆU ============ -->
+      <section data-screen-label="Nhập liệu" style="display:{{ entryDisplay }}; padding:26px 28px 44px;">
+        <div style="display:grid; grid-template-columns:1fr 320px; gap:20px; max-width:1120px;">
+          <form onSubmit="{{ preventSubmit }}" style="background:#fffefb; border:1px solid #e4e8d8; border-radius:16px; padding:26px 28px; box-shadow:0 1px 2px rgba(28,43,33,.04);">
+            <div style="font-family:'Spectral',serif; font-size:19px; font-weight:600;">Báo cáo quan sát thực địa</div>
+            <div style="font-size:12.5px; color:#77836f; margin-bottom:22px;">Ghi nhận cá thể loài trong quá trình tuần tra tại bán đảo Sơn Trà</div>
+
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+              <label style="display:block;"><span style="display:block; font-size:12.5px; font-weight:500; margin-bottom:6px;">Loài quan sát</span>
+                <select style="width:100%; padding:11px 12px; border:1px solid #d7dcca; border-radius:9px; font:inherit; font-size:13.5px; background:#fff; color:#1b2a20;"><option>Voọc chà vá chân nâu</option><option>Khỉ vàng</option><option>Diều hoa Miến Điện</option><option>Trăn gấm</option><option>Loài khác…</option></select>
+              </label>
+              <label style="display:block;"><span style="display:block; font-size:12.5px; font-weight:500; margin-bottom:6px;">Số lượng cá thể</span>
+                <input type="number" value="4" style="width:100%; padding:11px 12px; border:1px solid #d7dcca; border-radius:9px; font:inherit; font-size:13.5px; background:#fff;"/>
+              </label>
+              <label style="display:block;"><span style="display:block; font-size:12.5px; font-weight:500; margin-bottom:6px;">Toạ độ GPS</span>
+                <input value="16.1187, 108.2969" style="width:100%; padding:11px 12px; border:1px solid #d7dcca; border-radius:9px; font:inherit; font-size:13.5px; font-family:'IBM Plex Mono',monospace; background:#fff;"/>
+              </label>
+              <label style="display:block;"><span style="display:block; font-size:12.5px; font-weight:500; margin-bottom:6px;">Thời điểm</span>
+                <input value="04/07/2026 · 07:15" style="width:100%; padding:11px 12px; border:1px solid #d7dcca; border-radius:9px; font:inherit; font-size:13.5px; background:#fff;"/>
+              </label>
+            </div>
+
+            <div style="margin-top:16px;">
+              <span style="display:block; font-size:12.5px; font-weight:500; margin-bottom:6px;">Sinh cảnh</span>
+              <div style="display:flex; gap:8px; flex-wrap:wrap;">
+                <sc-for list="{{ habitatOpts }}" as="h" hint-placeholder-count="4">
+                  <button type="button" onClick="{{ h.onClick }}" style="border:1px solid {{ h.border }}; background:{{ h.bg }}; color:{{ h.fg }}; font:inherit; font-size:12.5px; padding:8px 14px; border-radius:9px; cursor:pointer;">{{ h.label }}</button>
+                </sc-for>
+              </div>
+            </div>
+
+            <label style="display:block; margin-top:16px;"><span style="display:block; font-size:12.5px; font-weight:500; margin-bottom:6px;">Ghi chú hành vi</span>
+              <textarea rows="3" placeholder="Mô tả hoạt động, đàn/nhóm, tình trạng sức khoẻ…" style="width:100%; padding:11px 12px; border:1px solid #d7dcca; border-radius:9px; font:inherit; font-size:13.5px; background:#fff; resize:vertical;"></textarea>
+            </label>
+
+            <div style="margin-top:16px;">
+              <span style="display:block; font-size:12.5px; font-weight:500; margin-bottom:6px;">Hình ảnh minh chứng</span>
+              <div style="border:1.5px dashed #cdd3bf; border-radius:11px; padding:26px; text-align:center; background:#f7f8f1;">
+                <div style="width:40px; height:40px; margin:0 auto 10px; border-radius:11px; background:#e7ede0; display:flex; align-items:center; justify-content:center;"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="#557d4a" stroke-width="1.6"><path d="M10 14V5M6.5 8.5L10 5l3.5 3.5"/><path d="M4 14v1.5A1.5 1.5 0 0 0 5.5 17h9a1.5 1.5 0 0 0 1.5-1.5V14"/></svg></div>
+                <div style="font-size:13px; color:#485541;">Kéo thả ảnh hoặc <span style="color:#557d4a; font-weight:500;">chọn tệp</span></div>
+                <div style="font-size:11.5px; color:#8a9581; margin-top:3px; font-family:'IBM Plex Mono',monospace;">JPG, PNG · tối đa 10MB</div>
+              </div>
+            </div>
+
+            <div style="display:flex; gap:12px; margin-top:24px;">
+              <button type="submit" style="background:#2f5540; color:#fff; border:none; font:inherit; font-size:14px; font-weight:500; padding:12px 22px; border-radius:10px; cursor:pointer;">Gửi báo cáo</button>
+              <button type="button" style="background:#fff; color:#2f5540; border:1px solid #cdd3bf; font:inherit; font-size:14px; padding:12px 20px; border-radius:10px; cursor:pointer;">Lưu nháp</button>
+            </div>
+          </form>
+
+          <div>
+            <div style="background:#fffefb; border:1px solid #e4e8d8; border-radius:16px; padding:20px; box-shadow:0 1px 2px rgba(28,43,33,.04);">
+              <div style="font-family:'Spectral',serif; font-size:16px; font-weight:600; margin-bottom:4px;">Báo cáo của tôi</div>
+              <div style="font-size:12px; color:#77836f; margin-bottom:14px;">Tháng 7/2026</div>
+              <sc-for list="{{ myReports }}" as="r" hint-placeholder-count="3">
+                <div style="padding:11px 0; border-top:1px solid #eef0e6;">
+                  <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <span style="font-size:13px; font-weight:500;">{{ r.name }}</span>
+                    <span style="font-size:10.5px; font-weight:600; padding:3px 9px; border-radius:20px; background:{{ r.bg }}; color:{{ r.fg }};">{{ r.status }}</span>
+                  </div>
+                  <div style="font-size:11.5px; color:#8a9581; margin-top:3px; font-family:'IBM Plex Mono',monospace;">{{ r.meta }}</div>
+                </div>
+              </sc-for>
+            </div>
+            <div style="background:#e7ede0; border:1px solid #d6ddc9; border-radius:16px; padding:18px 20px; margin-top:16px;">
+              <div style="font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:1px; color:#557d4a; margin-bottom:7px;">MẸO GHI NHẬN</div>
+              <p style="font-size:12.5px; line-height:1.6; color:#3f4d3a; margin:0;">Chụp ảnh rõ mặt và chi để hỗ trợ định danh. Với voọc chà vá, ghi lại số cá thể đực/cái/con non nếu quan sát được.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:&quot;100%&quot;,&quot;height&quot;:&quot;760px&quot;}}">
+class Component extends DCLogic {
+  state = { screen: 'dashboard', speciesId: 'vooc', group: 'Tất cả', mapPinId: 'p1', habitat: 'Rừng thường xanh', navOpen: false };
+
+  species() {
+    return [
+      { id:'vooc', tag:'Vc', name:'Voọc chà vá chân nâu', sci:'Pygathrix nemaeus', group:'Thú', status:'Nguy cấp (EN)', statusShort:'EN', count:'~1.350 cá thể', thumbBg:'#efe3d6', thumbFg:'#a0623a',
+        desc:'Linh trưởng đặc hữu Đông Dương, bộ lông nhiều màu rực rỡ với “tất” đỏ nâu đặc trưng ở cẳng chân. Sơn Trà là một trong những quần thể lớn và dễ quan sát nhất Việt Nam.',
+        habitat:'Rừng thường xanh trên núi thấp, tán rừng kín, độ cao 200–600 m.', threats:['Mất sinh cảnh','Đường giao thông','Săn bắt trái phép','Du lịch quá tải'] },
+      { id:'khi', tag:'Kv', name:'Khỉ vàng', sci:'Macaca mulatta', group:'Thú', status:'Ít lo ngại (LC)', statusShort:'LC', count:'~420 cá thể', thumbBg:'#e7ede0', thumbFg:'#557d4a',
+        desc:'Loài khỉ phổ biến, thích nghi tốt, thường xuất hiện gần khu du lịch và đường Hoàng Sa.', habitat:'Rừng thứ sinh, ven rừng, khu vực gần con người.', threats:['Cho ăn không kiểm soát','Xung đột người–động vật'] },
+      { id:'dieu', tag:'Dh', name:'Diều hoa Miến Điện', sci:'Spilornis cheela', group:'Chim', status:'Sắp bị đe dọa (NT)', statusShort:'NT', count:'12 điểm ghi nhận', thumbBg:'#e4ecec', thumbFg:'#3d7d78',
+        desc:'Chim ăn thịt cỡ trung, chuyên săn rắn và bò sát, thường lượn trên tán rừng ven biển Sơn Trà.', habitat:'Rừng thường xanh, vách núi ven biển.', threats:['Suy giảm con mồi','Nhiễu loạn tổ'] },
+      { id:'tran', tag:'Tg', name:'Trăn gấm', sci:'Malayopython reticulatus', group:'Bò sát', status:'Ít lo ngại (LC)', statusShort:'LC', count:'8 điểm ghi nhận', thumbBg:'#ece6d6', thumbFg:'#9a8442',
+        desc:'Một trong những loài trăn dài nhất thế giới, hoa văn dạng lưới. Sống gần suối và khu rừng ẩm.', habitat:'Rừng ẩm gần suối, hang đá.', threats:['Buôn bán da','Săn bắt'] },
+      { id:'ga', tag:'Gr', name:'Gà rừng', sci:'Gallus gallus', group:'Chim', status:'Ít lo ngại (LC)', statusShort:'LC', count:'26 điểm ghi nhận', thumbBg:'#e4ecec', thumbFg:'#3d7d78',
+        desc:'Tổ tiên hoang dã của gà nhà, sống theo đàn nhỏ dưới tán rừng, tiếng gáy vang buổi sáng.', habitat:'Rừng thứ sinh, trảng cây bụi.', threats:['Bẫy','Săn bắt'] },
+      { id:'cay', tag:'Cv', name:'Cầy vòi hương', sci:'Paradoxurus hermaphroditus', group:'Thú', status:'Ít lo ngại (LC)', statusShort:'LC', count:'15 điểm ghi nhận', thumbBg:'#e7ede0', thumbFg:'#557d4a',
+        desc:'Thú ăn đêm, ăn tạp, đóng vai trò phát tán hạt cây rừng. Hiếm khi bắt gặp ban ngày.', habitat:'Rừng thường xanh, ven khu dân cư.', threats:['Bẫy','Buôn bán'] },
+      { id:'da', tag:'Đa', name:'Cây đa Sơn Trà', sci:'Ficus sp.', group:'Thực vật', status:'Cây di sản', statusShort:'DS', count:'Cây nghìn năm', thumbBg:'#e7ede0', thumbFg:'#557d4a',
+        desc:'Cây đa cổ thụ hơn ngàn năm tuổi với hệ rễ phụ khổng lồ — biểu tượng và điểm đến nổi tiếng của bán đảo.', habitat:'Sườn núi ven đường Bãi Bắc.', threats:['Nén đất do du khách','Tổn thương rễ'] },
+      { id:'cho', tag:'Cc', name:'Chò chai', sci:'Hopea recopei', group:'Thực vật', status:'Sắp nguy cấp (VU)', statusShort:'VU', count:'Rải rác', thumbBg:'#e7ede0', thumbFg:'#557d4a',
+        desc:'Cây gỗ lớn thuộc họ Dầu, tạo tầng tán chính của rừng thường xanh Sơn Trà.', habitat:'Rừng thường xanh núi thấp.', threats:['Khai thác gỗ','Tái sinh kém'] },
+    ];
+  }
+
+  statusStyle(short) {
+    const m = { EN:['#f2ddd3','#95492a'], VU:['#f4ead0','#8a6a1e'], NT:['#e6ecd6','#5c6d2f'], LC:['#e2ede4','#3f7a55'], DS:['#e4ecec','#3d7d78'] };
+    return m[short] || ['#e7ede0','#557d4a'];
+  }
+
+  renderVals() {
+    const scr = this.state.screen;
+    const disp = (n) => scr === n ? 'block' : 'none';
+    const navBg = (n) => scr === n ? '#3c5a48' : 'transparent';
+    const titles = {
+      dashboard: ['Tổng quan', 'Khu bảo tồn thiên nhiên Sơn Trà · Đà Nẵng'],
+      map: ['Bản đồ phân bố', 'Vị trí ghi nhận loài & trạm quan trắc'],
+      species: ['Danh mục loài', 'Đa dạng sinh học bán đảo Sơn Trà'],
+      entry: ['Nhập liệu quan sát', 'Ghi nhận dữ liệu thực địa'],
+    };
+    const sp = this.species();
+    const sel0 = sp.find(s => s.id === this.state.speciesId) || sp[0];
+    const [selBg, selFg] = this.statusStyle(sel0.statusShort);
+
+    const groups = ['Tất cả','Thú','Chim','Bò sát','Thực vật'];
+    const filtered = this.state.group === 'Tất cả' ? sp : sp.filter(s => s.group === this.state.group);
+
+    const habitats = ['Rừng thường xanh','Rừng thứ sinh','Ven suối','Vách núi ven biển'];
+
+    const pins = [
+      { id:'p1', name:'Đàn voọc Tiểu khu 63', zone:'Phân khu bảo vệ nghiêm ngặt', count:'~24', last:'2 giờ trước', x:'44%', y:'40%', color:'#b4623a' },
+      { id:'p2', name:'Diều hoa · Bãi Bắc', zone:'Vách núi ven biển', count:'2', last:'Hôm qua', x:'62%', y:'30%', color:'#3d7d78' },
+      { id:'p3', name:'Khỉ vàng · đường Hoàng Sa', zone:'Ven rừng', count:'~15', last:'3 giờ trước', x:'34%', y:'55%', color:'#b4623a' },
+      { id:'p4', name:'Trạm Suối Đá', zone:'Quan trắc không khí', count:'—', last:'Trực tuyến', x:'55%', y:'58%', color:'#557d4a' },
+      { id:'p5', name:'Trăn gấm · Suối Ôm', zone:'Rừng ẩm gần suối', count:'1', last:'2 ngày trước', x:'50%', y:'48%', color:'#9a8442' },
+      { id:'p6', name:'Cây đa nghìn năm', zone:'Điểm di sản', count:'1', last:'Ổn định', x:'70%', y:'46%', color:'#557d4a' },
+    ];
+    const mapSel = pins.find(p => p.id === this.state.mapPinId) || pins[0];
+
+    return {
+      navOpen: this.state.navOpen,
+      toggleNav: () => this.setState(s => ({ navOpen: !s.navOpen })),
+      closeNav: () => this.setState({ navOpen: false }),
+      goDash: () => this.setState({ screen:'dashboard', navOpen:false }),
+      goMap: () => this.setState({ screen:'map', navOpen:false }),
+      goSpecies: () => this.setState({ screen:'species', navOpen:false }),
+      goEntry: () => this.setState({ screen:'entry', navOpen:false }),
+      goVooc: () => this.setState({ screen:'species', speciesId:'vooc', navOpen:false }),
+      dashBg: navBg('dashboard'), mapBg: navBg('map'), speciesBg: navBg('species'), entryBg: navBg('entry'),
+      dashDisplay: disp('dashboard'), mapDisplay: disp('map'), speciesDisplay: disp('species'), entryDisplay: disp('entry'),
+      pageTitle: titles[scr][0], pageSub: titles[scr][1],
+      preventSubmit: (e) => e.preventDefault(),
+
+      stats: [
+        { label:'Loài ghi nhận', value:'1.087', dot:'#557d4a', trend:'↗ +12 trong quý', trendColor:'#557d4a' },
+        { label:'Cá thể voọc', value:'~1.350', dot:'#b4623a', trend:'↗ +50 so với 2023', trendColor:'#557d4a' },
+        { label:'Quan sát tháng 7', value:'248', dot:'#3d7d78', trend:'42 hôm nay', trendColor:'#77836f' },
+        { label:'Loài bị đe dọa', value:'19', dot:'#c08a3e', trend:'2 mức Nguy cấp', trendColor:'#b4623a' },
+      ],
+      popBars: [
+        { year:'2019', val:'1.050', h:'56%', fill:'#c9d6bd' },
+        { year:'2020', val:'1.120', h:'64%', fill:'#c9d6bd' },
+        { year:'2021', val:'1.180', h:'71%', fill:'#a9c298' },
+        { year:'2022', val:'1.240', h:'80%', fill:'#a9c298' },
+        { year:'2023', val:'1.300', h:'90%', fill:'#7aa267' },
+        { year:'2024', val:'1.350', h:'100%', fill:'#b4623a' },
+      ],
+      envStations: [
+        { name:'Trạm Bãi Bắc · Nước', rating:'Tốt · 92', metric:'pH 7,2 · DO 6,8 mg/L', color:'#3d7d78', w:'92%' },
+        { name:'Trạm Suối Đá · Không khí', rating:'Tốt · 88', metric:'AQI 41 · PM2.5 9 µg/m³', color:'#557d4a', w:'88%' },
+        { name:'Đỉnh Bàn Cờ · Đất', rating:'Khá · 74', metric:'Độ ẩm 62% · pH 5,8', color:'#c08a3e', w:'74%' },
+      ],
+      observations: [
+        { tag:'Vc', bg:'#efe3d6', fg:'#a0623a', name:'Voọc chà vá chân nâu', place:'Tiểu khu 63', by:'Nguyễn V.A', time:'2 giờ trước' },
+        { tag:'Dh', bg:'#e4ecec', fg:'#3d7d78', name:'Diều hoa Miến Điện', place:'Bãi Bắc', by:'Lê T.H', time:'Hôm qua' },
+        { tag:'Kv', bg:'#e7ede0', fg:'#557d4a', name:'Khỉ vàng', place:'Đường Hoàng Sa', by:'Trần Q.M', time:'Hôm qua' },
+        { tag:'Tg', bg:'#ece6d6', fg:'#9a8442', name:'Trăn gấm', place:'Suối Ôm', by:'Phạm V.K', time:'2 ngày trước' },
+      ],
+
+      mapFilters: [
+        { label:'Thú', count:32, color:'#b4623a' },
+        { label:'Chim', count:118, color:'#3d7d78' },
+        { label:'Bò sát', count:41, color:'#9a8442' },
+        { label:'Thực vật', count:896, color:'#557d4a' },
+      ],
+      mapPins: pins.map(p => ({ ...p, onClick: () => this.setState({ mapPinId: p.id }) })),
+      mapSel,
+
+      groupChips: groups.map(g => ({
+        label: g,
+        onClick: () => this.setState({ group: g }),
+        border: this.state.group === g ? '#2f5540' : '#d7dcca',
+        bg: this.state.group === g ? '#2f5540' : '#fff',
+        fg: this.state.group === g ? '#fff' : '#485541',
+      })),
+      speciesList: filtered.map(s => {
+        const [b,f] = this.statusStyle(s.statusShort);
+        return { ...s, statusBg:b, statusFg:f, onClick: () => this.setState({ speciesId: s.id }),
+          rowBg: s.id === this.state.speciesId ? '#eef2e8' : 'transparent' };
+      }),
+      sel: { ...sel0, statusBg:selBg, statusFg:selFg },
+
+      habitatOpts: habitats.map(h => ({
+        label: h,
+        onClick: () => this.setState({ habitat: h }),
+        border: this.state.habitat === h ? '#2f5540' : '#d7dcca',
+        bg: this.state.habitat === h ? '#e7ede0' : '#fff',
+        fg: this.state.habitat === h ? '#2f5540' : '#485541',
+      })),
+      myReports: [
+        { name:'Voọc chà vá · TK63', status:'Đã duyệt', bg:'#e2ede4', fg:'#3f7a55', meta:'03/07 · 4 cá thể' },
+        { name:'Khỉ vàng · Hoàng Sa', status:'Chờ duyệt', bg:'#f4ead0', fg:'#8a6a1e', meta:'02/07 · 15 cá thể' },
+        { name:'Diều hoa · Bãi Bắc', status:'Đã duyệt', bg:'#e2ede4', fg:'#3f7a55', meta:'01/07 · 2 cá thể' },
+      ],
+    };
+  }
+}
+</script>
+</body>
+</html>

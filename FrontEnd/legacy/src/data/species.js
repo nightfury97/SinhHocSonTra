@@ -1,0 +1,58 @@
+export const SPECIES = [
+  {
+    id: 'vooc', tag: 'Vc', name: 'Voọc chà vá chân nâu', sci: 'Pygathrix nemaeus', group: 'Thú', featured: true,
+    status: 'Nguy cấp (EN)', statusShort: 'EN', count: '~1.350 cá thể',
+    desc: 'Linh trưởng đặc hữu Đông Dương, bộ lông nhiều màu rực rỡ với "tất" đỏ nâu đặc trưng ở cẳng chân. Sơn Trà là một trong những quần thể lớn và dễ quan sát nhất Việt Nam.',
+    habitat: 'Rừng thường xanh trên núi thấp, tán rừng kín, độ cao 200–600 m.',
+    threats: ['Mất sinh cảnh', 'Đường giao thông', 'Săn bắt trái phép', 'Du lịch quá tải'],
+  },
+  {
+    id: 'khi', tag: 'Kv', name: 'Khỉ vàng', sci: 'Macaca mulatta', group: 'Thú',
+    status: 'Ít lo ngại (LC)', statusShort: 'LC', count: '~420 cá thể',
+    desc: 'Loài khỉ phổ biến, thích nghi tốt, thường xuất hiện gần khu du lịch và đường Hoàng Sa.',
+    habitat: 'Rừng thứ sinh, ven rừng, khu vực gần con người.',
+    threats: ['Cho ăn không kiểm soát', 'Xung đột người–động vật'],
+  },
+  {
+    id: 'dieu', tag: 'Dh', name: 'Diều hoa Miến Điện', sci: 'Spilornis cheela', group: 'Chim',
+    status: 'Sắp bị đe dọa (NT)', statusShort: 'NT', count: '12 điểm ghi nhận',
+    desc: 'Chim ăn thịt cỡ trung, chuyên săn rắn và bò sát, thường lượn trên tán rừng ven biển Sơn Trà.',
+    habitat: 'Rừng thường xanh, vách núi ven biển.',
+    threats: ['Suy giảm con mồi', 'Nhiễu loạn tổ'],
+  },
+  {
+    id: 'tran', tag: 'Tg', name: 'Trăn gấm', sci: 'Malayopython reticulatus', group: 'Bò sát',
+    status: 'Ít lo ngại (LC)', statusShort: 'LC', count: '8 điểm ghi nhận',
+    desc: 'Một trong những loài trăn dài nhất thế giới, hoa văn dạng lưới. Sống gần suối và khu rừng ẩm.',
+    habitat: 'Rừng ẩm gần suối, hang đá.',
+    threats: ['Buôn bán da', 'Săn bắt'],
+  },
+  {
+    id: 'ga', tag: 'Gr', name: 'Gà rừng', sci: 'Gallus gallus', group: 'Chim',
+    status: 'Ít lo ngại (LC)', statusShort: 'LC', count: '26 điểm ghi nhận',
+    desc: 'Tổ tiên hoang dã của gà nhà, sống theo đàn nhỏ dưới tán rừng, tiếng gáy vang buổi sáng.',
+    habitat: 'Rừng thứ sinh, trảng cây bụi.',
+    threats: ['Bẫy', 'Săn bắt'],
+  },
+  {
+    id: 'cay', tag: 'Cv', name: 'Cầy vòi hương', sci: 'Paradoxurus hermaphroditus', group: 'Thú',
+    status: 'Ít lo ngại (LC)', statusShort: 'LC', count: '15 điểm ghi nhận',
+    desc: 'Thú ăn đêm, ăn tạp, đóng vai trò phát tán hạt cây rừng. Hiếm khi bắt gặp ban ngày.',
+    habitat: 'Rừng thường xanh, ven khu dân cư.',
+    threats: ['Bẫy', 'Buôn bán'],
+  },
+  {
+    id: 'da', tag: 'Đa', name: 'Cây đa Sơn Trà', sci: 'Ficus sp.', group: 'Thực vật',
+    status: 'Cây di sản', statusShort: 'DS', count: 'Cây nghìn năm',
+    desc: 'Cây đa cổ thụ hơn ngàn năm tuổi với hệ rễ phụ khổng lồ — biểu tượng và điểm đến nổi tiếng của bán đảo.',
+    habitat: 'Sườn núi ven đường Bãi Bắc.',
+    threats: ['Nén đất do du khách', 'Tổn thương rễ'],
+  },
+  {
+    id: 'cho', tag: 'Cc', name: 'Chò chai', sci: 'Hopea recopei', group: 'Thực vật',
+    status: 'Sắp nguy cấp (VU)', statusShort: 'VU', count: 'Rải rác',
+    desc: 'Cây gỗ lớn thuộc họ Dầu, tạo tầng tán chính của rừng thường xanh Sơn Trà.',
+    habitat: 'Rừng thường xanh núi thấp.',
+    threats: ['Khai thác gỗ', 'Tái sinh kém'],
+  },
+];

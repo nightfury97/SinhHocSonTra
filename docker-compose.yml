@@ -1,0 +1,27 @@
+services:
+  backend:
+    build:
+      context: ./BackEnd
+    env_file:
+      - ./BackEnd/.env.docker
+    environment:
+      - UPLOAD_DIR=/app/uploads
+    # Ảnh loài tải lên nằm ngoài container để không mất khi build lại image. Nhớ sao lưu thư mục này.
+    volumes:
+      - ./BackEnd/uploads:/app/uploads
+    ports:
+      - "4010:4010"
+    # MySQL runs on the host (shared-mysql container), not in this compose
+    # project — reach it via the docker-provided host gateway.
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./FrontEnd
+    ports:
+      - "3010:80"
+    depends_on:
+      - backend
+    restart: unless-stopped

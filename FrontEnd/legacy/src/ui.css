@@ -1,0 +1,340 @@
+/* Hallmark · genre: editorial · macrostructure: App Shell (operational dashboard — not a catalog
+ * landing-page macrostructure) · theme: custom (vibe: "cool rainforest ledger, terracotta waymark")
+ * design-system: design.md · designed-as-app · nav: app-shell side-rail (not a marketing nav archetype)
+ * Component voice — buttons, nav rail, panels, chips, fields, badges. */
+
+html,
+body {
+  overflow-x: clip;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  height: 100%;
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--color-ink);
+  background: var(--color-paper);
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--color-accent);
+  color: var(--color-accent-ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+  transition: none;
+}
+
+/* ---- eyebrow / mono label ---- */
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-ink-3);
+}
+
+/* ---- flat hairline panel (replaces drop-shadow card) ---- */
+.panel {
+  background: var(--color-paper-2);
+  border: 1px solid var(--color-rule);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+}
+
+.panel-dark {
+  background: var(--color-surface-dark);
+  border: 1px solid var(--color-surface-dark-3);
+  border-radius: var(--radius-lg);
+  color: var(--color-ink-on-dark);
+  padding: var(--space-lg);
+}
+
+.divider {
+  border: none;
+  border-top: 1px solid var(--color-rule-2);
+}
+
+/* ---- buttons — full interaction states ---- */
+.btn {
+  font: inherit;
+  font-size: var(--text-sm);
+  border-radius: var(--radius-md);
+  padding: 0.65rem 1.15rem;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition:
+    background-color var(--dur-short) var(--ease-out),
+    border-color var(--dur-short) var(--ease-out),
+    color var(--dur-short) var(--ease-out),
+    transform var(--dur-instant) var(--ease-out);
+}
+.btn:active {
+  transform: translateY(1px);
+}
+.btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+  transform: none;
+}
+
+.btn-primary {
+  background: var(--color-surface-dark);
+  color: var(--color-ink-on-dark);
+  font-weight: 500;
+}
+.btn-primary:hover:not(:disabled) {
+  background: var(--color-surface-dark-2);
+}
+
+.btn-secondary {
+  background: var(--color-paper-2);
+  color: var(--color-surface-dark);
+  border-color: var(--color-rule);
+}
+.btn-secondary:hover:not(:disabled) {
+  background: var(--color-paper-3);
+  border-color: var(--color-ink-3);
+}
+
+.btn-ghost {
+  background: transparent;
+  border-color: transparent;
+  color: var(--color-accent-2);
+  font-weight: 500;
+  padding: 0.4rem 0.2rem;
+}
+.btn-ghost:hover:not(:disabled) {
+  color: var(--color-ink);
+}
+
+.btn-on-dark {
+  background: var(--color-surface-dark-2);
+  border-color: var(--color-surface-dark-3);
+  color: var(--color-ink-on-dark);
+}
+.btn-on-dark:hover:not(:disabled) {
+  background: var(--color-surface-dark-3);
+}
+
+/* ---- chips / filter pills ---- */
+.chip {
+  font: inherit;
+  font-size: var(--text-sm);
+  padding: 0.5rem 0.9rem;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--color-rule);
+  background: var(--color-paper-2);
+  color: var(--color-ink-2);
+  cursor: pointer;
+  transition:
+    background-color var(--dur-short) var(--ease-out),
+    border-color var(--dur-short) var(--ease-out),
+    color var(--dur-short) var(--ease-out);
+}
+.chip:hover:not(.is-active) {
+  border-color: var(--color-ink-3);
+  color: var(--color-ink);
+}
+.chip.is-active {
+  background: var(--color-surface-dark);
+  border-color: var(--color-surface-dark);
+  color: var(--color-ink-on-dark);
+}
+
+.chip-outline {
+  font: inherit;
+  font-size: var(--text-sm);
+  padding: 0.55rem 0.95rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-rule);
+  background: var(--color-paper-2);
+  color: var(--color-ink-2);
+  cursor: pointer;
+  transition:
+    background-color var(--dur-short) var(--ease-out),
+    border-color var(--dur-short) var(--ease-out),
+    color var(--dur-short) var(--ease-out);
+}
+.chip-outline:hover:not(.is-active) {
+  border-color: var(--color-ink-3);
+}
+.chip-outline.is-active {
+  background: var(--status-lc-bg);
+  border-color: var(--color-surface-dark);
+  color: var(--color-surface-dark);
+}
+
+/* ---- badge ---- */
+.badge {
+  display: inline-block;
+  font-size: var(--text-xs);
+  font-weight: 600;
+  padding: 0.25rem 0.6rem;
+  border-radius: var(--radius-pill);
+  white-space: nowrap;
+}
+
+/* ---- form fields ---- */
+.field-label {
+  display: block;
+  font-size: var(--text-sm);
+  font-weight: 500;
+  margin-bottom: var(--space-2xs);
+  color: var(--color-ink);
+}
+
+.field-input {
+  width: 100%;
+  padding: 0.65rem 0.75rem;
+  border: 1px solid var(--color-rule);
+  border-radius: var(--radius-sm);
+  font: inherit;
+  font-size: var(--text-base);
+  background: var(--color-paper-2);
+  color: var(--color-ink);
+  transition:
+    border-color var(--dur-short) var(--ease-out),
+    background-color var(--dur-short) var(--ease-out);
+}
+.field-input:hover {
+  border-color: var(--color-ink-3);
+}
+.field-input:focus-visible,
+.field-input:focus {
+  border-color: var(--color-accent-2);
+  background: var(--color-paper);
+  outline: none;
+}
+
+/* ---- list row (species / observation entries) ---- */
+.row-link {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  text-align: left;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font: inherit;
+  border-radius: var(--radius-md);
+  transition: background-color var(--dur-short) var(--ease-out);
+}
+.row-link:hover {
+  background: var(--color-paper-3);
+}
+.row-link.is-selected {
+  background: var(--status-lc-bg);
+}
+
+/* ---- nav rail (app-shell sidebar; not a marketing nav archetype) ---- */
+.nav-link {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  width: 100%;
+  text-align: left;
+  border: none;
+  border-left: 2px solid transparent;
+  cursor: pointer;
+  padding: 0.65rem 0.7rem;
+  border-radius: var(--radius-sm);
+  font: inherit;
+  font-size: var(--text-base);
+  color: var(--color-ink-on-dark);
+  background: transparent;
+  margin-bottom: 2px;
+  transition:
+    background-color var(--dur-short) var(--ease-out),
+    border-color var(--dur-short) var(--ease-out);
+}
+.nav-link:hover:not(.is-active) {
+  background: var(--color-surface-dark-2);
+}
+.nav-link.is-active {
+  background: var(--color-surface-dark-2);
+  border-left-color: var(--color-accent);
+}
+.nav-link:focus-visible {
+  outline-offset: -2px;
+}
+
+.icon-btn {
+  border: 1px solid var(--color-rule);
+  background: var(--color-paper-2);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    background-color var(--dur-short) var(--ease-out),
+    border-color var(--dur-short) var(--ease-out);
+}
+.icon-btn:hover {
+  background: var(--color-paper-3);
+  border-color: var(--color-ink-3);
+}
+
+/* ---- map pin ---- */
+.map-pin {
+  transition: transform var(--dur-short) var(--ease-out), filter var(--dur-short) var(--ease-out);
+}
+.map-pin:hover,
+.map-pin:focus-visible {
+  filter: brightness(1.15);
+}
+.map-pin:focus-visible {
+  outline-offset: 4px;
+}
+
+/* ---- reduced motion ---- */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ---- app-shell responsive: sidebar collapses to off-canvas ---- */
+@media (max-width: 860px) {
+  aside[data-nav] {
+    position: fixed;
+    z-index: var(--z-modal);
+    height: 100%;
+    transition: transform var(--dur-medium) var(--ease-out);
+  }
+  aside[data-nav][data-open='false'] {
+    transform: translateX(-100%);
+  }
+  div[data-scrim][data-open='true'] {
+    display: block !important;
+  }
+  button[data-burger] {
+    display: inline-flex !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .stack-mobile {
+    grid-template-columns: 1fr !important;
+    flex-direction: column !important;
+  }
+  .header-search {
+    display: none !important;
+  }
+}

@@ -1,0 +1,22 @@
+[
+  {
+    "date": "2026-11-21",
+    "macrostructure": "App Shell (operational console — 7 screens, side-rail N3, no footer)",
+    "theme": "custom",
+    "theme_axes": "light / grotesk-sans / chromatic-other (green)",
+    "vibe": "field station ledger, forest-green signal, plain and dense",
+    "enrichment": "none",
+    "scope": "app",
+    "brief": "Sơn Trà biodiversity monitoring — full rebuild: overview, offline map, species curation, observation review, transect surveys, dataset import, users"
+  },
+  {
+    "date": "2026-08-15",
+    "macrostructure": "App Shell (custom — operational dashboard, not a catalog landing-page macrostructure)",
+    "theme": "custom",
+    "theme_axes": "light / roman-serif / warm",
+    "vibe": "cool rainforest ledger, terracotta waymark",
+    "enrichment": "none",
+    "scope": "app",
+    "brief": "Sơn Trà Biodiversity Console · redesign of the 4-screen ranger dashboard (Tổng quan, Bản đồ, Danh mục loài, Nhập liệu)"
+  }
+]

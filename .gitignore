@@ -56,3 +56,6 @@ vite.config.ts.timestamp-*
 *.pem
 *.key
 *.crt
+
+# Database dumps
+backups/

@@ -1,0 +1,124 @@
+/* Hallmark · genre: editorial · theme: custom (vibe: "cool rainforest ledger, terracotta waymark")
+ * paper oklch(97% 0.014 95) · accent oklch(52% 0.13 40) warm · display Spectral · body IBM Plex Sans
+ * axes: paper-band=light · display-style=roman-serif · accent-hue=warm
+ */
+
+:root {
+  /* ---- colour: surfaces ---- */
+  --color-paper: oklch(97% 0.014 95); /* app canvas, warm cream */
+  --color-paper-2: oklch(99% 0.006 90); /* raised surface / panel */
+  --color-paper-3: oklch(98% 0.01 90); /* header / secondary surface */
+  --color-surface-dark: oklch(26% 0.045 155); /* sidebar + dark panels */
+  --color-surface-dark-2: oklch(32% 0.04 155); /* hover/active on dark */
+  --color-surface-dark-3: oklch(38% 0.035 155); /* border on dark */
+
+  /* ---- colour: ink ---- */
+  --color-ink: oklch(23% 0.03 152); /* primary text */
+  --color-ink-2: oklch(51% 0.02 140); /* secondary text */
+  --color-ink-3: oklch(64% 0.015 100); /* faint / placeholder text */
+  --color-ink-on-dark: oklch(94% 0.015 140); /* text on dark surfaces */
+  --color-ink-on-dark-2: oklch(74% 0.03 140); /* secondary text on dark */
+
+  /* ---- colour: rule ---- */
+  --color-rule: oklch(90% 0.02 95);
+  --color-rule-2: oklch(93% 0.015 95);
+  --color-rule-on-dark: oklch(38% 0.035 155);
+
+  /* ---- colour: accent ---- */
+  --color-accent: oklch(52% 0.13 40); /* terracotta — primary signal */
+  --color-accent-ink: oklch(99% 0.008 90);
+  --color-accent-2: oklch(50% 0.07 195); /* teal — secondary categorical */
+  --color-focus: oklch(56% 0.11 195); /* focus ring — distinct from accent */
+
+  /* ---- colour: semantic status (conservation grading) ---- */
+  --status-en-bg: oklch(91% 0.035 30);
+  --status-en-fg: oklch(42% 0.11 30);
+  --status-vu-bg: oklch(92% 0.045 80);
+  --status-vu-fg: oklch(48% 0.09 75);
+  --status-nt-bg: oklch(92% 0.03 120);
+  --status-nt-fg: oklch(44% 0.06 120);
+  --status-lc-bg: oklch(92% 0.03 150);
+  --status-lc-fg: oklch(46% 0.08 150);
+  --status-ds-bg: oklch(92% 0.02 195);
+  --status-ds-fg: oklch(46% 0.06 195);
+
+  /* ---- colour: workflow status (reports) ---- */
+  --workflow-approved-bg: oklch(92% 0.03 150);
+  --workflow-approved-fg: oklch(46% 0.08 150);
+  --workflow-pending-bg: oklch(92% 0.045 80);
+  --workflow-pending-fg: oklch(48% 0.09 75);
+
+  /* ---- colour: taxon categorical swatches ---- */
+  --swatch-mammal-bg: oklch(91% 0.03 50);
+  --swatch-mammal-fg: oklch(46% 0.08 40);
+  --swatch-bird-bg: oklch(92% 0.02 195);
+  --swatch-bird-fg: oklch(46% 0.06 195);
+  --swatch-reptile-bg: oklch(91% 0.025 95);
+  --swatch-reptile-fg: oklch(50% 0.05 90);
+  --swatch-plant-bg: oklch(92% 0.025 150);
+  --swatch-plant-fg: oklch(46% 0.07 150);
+  --swatch-featured-bg: oklch(93% 0.03 40); /* flagship-species tag — softer than the EN status chip */
+  --swatch-featured-fg: oklch(45% 0.1 40);
+
+  /* ---- colour: hazard / threat tag (independent of conservation status) ---- */
+  --tag-hazard-bg: oklch(93% 0.025 45);
+  --tag-hazard-fg: oklch(43% 0.09 35);
+
+  /* ---- typography ---- */
+  --font-display: 'Spectral', ui-serif, Georgia, serif;
+  --font-body: 'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', monospace;
+
+  --text-xs: 0.68rem;
+  --text-sm: 0.8rem;
+  --text-base: 0.875rem;
+  --text-md: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.375rem;
+  --text-2xl: 1.75rem;
+  --text-display: clamp(1.75rem, 1vw + 1.5rem, 2.15rem);
+
+  /* ---- spacing (4pt scale) ---- */
+  --space-3xs: 0.125rem;
+  --space-2xs: 0.25rem;
+  --space-xs: 0.5rem;
+  --space-sm: 0.75rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2.5rem;
+  --space-2xl: 4rem;
+  --space-3xl: 6rem;
+
+  /* ---- radius ---- */
+  --radius-sm: 0.5rem;
+  --radius-md: 0.625rem;
+  --radius-lg: 0.875rem;
+  --radius-pill: 999px;
+
+  /* ---- motion ---- */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in: cubic-bezier(0.7, 0, 0.84, 0);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-instant: 100ms;
+  --dur-short: 180ms;
+  --dur-medium: 260ms;
+
+  /* ---- elevation (hairline / whisper only — no stacked shadows) ---- */
+  --shadow-whisper: 0 1px 2px oklch(20% 0.02 150 / 0.06);
+  --shadow-hairline: 0 0 0 1px oklch(30% 0.02 150 / 0.07);
+
+  /* ---- map terrain (illustrative placeholder — replace with real GIS tiles) ---- */
+  --map-ground-1: oklch(88% 0.03 130);
+  --map-ground-2: oklch(93% 0.02 100);
+  --map-canopy-1: oklch(78% 0.07 140);
+  --map-canopy-2: oklch(85% 0.05 120);
+  --map-grain: oklch(80% 0.03 120 / 0.25);
+
+  /* ---- z-index scale ---- */
+  --z-base: 1;
+  --z-raised: 10;
+  --z-dropdown: 100;
+  --z-sticky: 200;
+  --z-modal: 400;
+  --z-toast: 500;
+}
